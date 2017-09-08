@@ -1,0 +1,32 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Segoe MDL2 Assets -->
+    <x:String x:Key="MenuIcon">&#xE700;</x:String>
+    <x:String x:Key="HomeIcon">&#xE80F;</x:String>
+    <x:String x:Key="DownloadIcon">&#xE896;</x:String>
+    <x:String x:Key="ShareIcon">&#xE72D;</x:String>
+    <x:String x:Key="FileIcon">&#xE8A5;</x:String>
+    <x:String x:Key="FolderIcon">&#xE8B7;</x:String>
+    <x:String x:Key="LockIcon">&#xE8A6;</x:String>
+    <x:String x:Key="CancelIcon">&#xE711;</x:String>
+    <x:String x:Key="PauseIcon">&#xE769;</x:String>
+    
+    <!-- Font Awesome Aliases --><!--
+    <x:String x:Key="MenuIcon">&#xF0C9;</x:String>
+    <x:String x:Key="HomeIcon">&#xF015;</x:String>
+    <x:String x:Key="DownloadIcon">&#xF019;</x:String>
+    <x:String x:Key="ShareIcon">&#xF1E0;</x:String>
+    <x:String x:Key="FileIcon">&#xF016;</x:String>
+    <x:String x:Key="TextFileIcon">&#xF0F6;</x:String>
+    <x:String x:Key="ImageFileIcon">&#xF1C5;</x:String>
+    <x:String x:Key="ArchiveFileIcon">&#xF1C6;</x:String>
+    <x:String x:Key="CodeFileIcon">&#xF1C9;</x:String>
+    <x:String x:Key="FolderIcon">&#xF115;</x:String>
+    <x:String x:Key="CancelIcon">&#xF00D;</x:String>
+    <x:String x:Key="PauseIcon">&#xF04C;</x:String>
+    <x:String x:Key="ResumeIcon">&#xF0DA;</x:String>
+    <x:String x:Key="LockIcon">&#xF023;</x:String>-->
+
+</ResourceDictionary>

@@ -1,0 +1,134 @@
+﻿<Page
+    x:Class="BaiduYun.Pages.Files"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BaiduYun.Pages"
+    xmlns:vm="using:BaiduYun.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:DataType="vm:YunFileViewModel" x:Key="BreadcrumbTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind FileName}"></TextBlock>
+                <TextBlock Text="/" Margin="2,0,0,0"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+
+        <Style TargetType="ListView" x:Key="ListBreadcrumbStyle">
+            <Setter Property="IsItemClickEnabled" Value="True"></Setter>
+            <Setter Property="SelectionMode" Value="None"></Setter>
+            <Setter Property="ItemTemplate" Value="{StaticResource BreadcrumbTemplate}"></Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="MinWidth" Value="0"></Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ListView" x:Key="FileListStyle">
+            <Setter Property="SelectionMode" Value="Multiple"></Setter>
+            <Setter Property="IsMultiSelectCheckBoxEnabled" Value="True"></Setter>
+            <Setter Property="IsItemClickEnabled" Value="False"></Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Page.DataContext>
+        <vm:FilesViewModel x:Name="vm"></vm:FilesViewModel>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource AppBarBackground}" Grid.Row="0">
+            <ListView Style="{StaticResource ListBreadcrumbStyle}"
+                      ItemsSource="{x:Bind vm.Path}" ItemClick="{x:Bind vm.PathChanged}">
+            </ListView>
+        </Border>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" x:Name="SelectAllBox" Margin="5,0,0,0" IsThreeState="True"></CheckBox>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="文件名" FontSize="18" Margin="5,5,0,5" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="大小" FontSize="18" Margin="5,5,0,5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="修改时间" FontSize="18" Margin="5,5,0,5" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+
+        <ListView x:Name="FileList" Grid.Row="2" Style="{StaticResource FileListStyle}"
+                  ItemsSource="{x:Bind vm.Items, Mode=OneWay}" ItemClick="{x:Bind vm.FileClicked}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:YunFileViewModel">
+                    <Grid Background="Transparent" RightTapped="ShowItemFlyout">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="移至回收站" Command="{x:Bind TrashCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="重命名" Command="{x:Bind RenameCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="创建分享" Command="{x:Bind ShareCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="下载至..." Command="{x:Bind DownloadCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind FileIcon}" Margin="0,0,5,0"></FontIcon>
+                            <TextBlock Text="{x:Bind FileName}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind FileName}"></ToolTip>
+                        </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="{x:Bind FileSize}" Grid.Column="1"></TextBlock>
+                        <TextBlock Text="{x:Bind ModifiedAt}" Grid.Column="2"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <RelativePanel Background="{ThemeResource AppBarBackground}" Grid.Row="3">
+            <TextBlock x:Name="QuotaDescriptor" Text="使用量" Margin="5,10,0,10"
+                       RelativePanel.AlignLeftWithPanel="True">
+            </TextBlock>
+            <ProgressBar Height="10" Width="150" Margin="15" Minimum="0" Maximum="1"
+                         Value="{x:Bind vm.QuotaValue, Mode=OneWay}"
+                         RelativePanel.RightOf="QuotaDescriptor">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind vm.QuotaTooltip, Mode=OneWay}"></ToolTip>
+                </ToolTipService.ToolTip>
+            </ProgressBar>
+        </RelativePanel>
+    </Grid>
+</Page>
