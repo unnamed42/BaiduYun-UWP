@@ -3,9 +3,9 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
 
-namespace BaiduYun.UWP {
+namespace BaiduYun.Xaml.Animations {
 
-    public static class Animations {
+    public static class Fade {
 
         /// <summary>
         /// Create a FadeIn/FadeOut Animation
@@ -14,7 +14,7 @@ namespace BaiduYun.UWP {
         /// <param name="parent">parent element of elem</param>
         /// <param name="duration">duration of animation, milliseconds</param>
         /// <param name="fadein">is fade in, return fadeout anim if false</param>
-        public static void StartFadeAnimation(FrameworkElement elem, FrameworkElement parent, int duration, bool fadein = true) {
+        public static void StartAnimation(FrameworkElement elem, FrameworkElement parent, int duration, bool fadein = true) {
             var compositor = ElementCompositionPreview.GetElementVisual(parent).Compositor;
             var fadeAnim = compositor.CreateScalarKeyFrameAnimation();
             fadeAnim.InsertKeyFrame(1f, fadein ? 1f : 0f);

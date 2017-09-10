@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using System.Collections.Generic;
@@ -6,12 +7,12 @@ using System.Collections.ObjectModel;
 
 using Windows.UI.Xaml.Controls;
 
-using BaiduYun.API;
-using BaiduYun.UWP;
 using BaiduYun.Misc;
 using BaiduYun.Global;
 using BaiduYun.Extensions;
-using BaiduYun.API.JsonResponse;
+using BaiduYun.Xaml.Input;
+using BaiduYun.Net.API;
+using BaiduYun.Net.API.Response;
 
 namespace BaiduYun.ViewModels {
 
@@ -22,18 +23,13 @@ namespace BaiduYun.ViewModels {
     public class YunFileViewModel {
 
         private YunFile file;
-        
-        private ICommand trash;
-        private ICommand rename;
-        private ICommand share;
-        private ICommand download;
 
         public YunFileViewModel(YunFile file) {
             this.file = file;
-            trash = new DelegateCommand<ListViewBase>(ExecuteTrash);
-            rename = new DelegateCommand<ListViewBase>(ExecuteRename);
-            share = new DelegateCommand<ListViewBase>(ExecuteShare);
-            download = new DelegateCommand<ListViewBase>(ExecuteDownload);
+            TrashCommand = new DelegateCommand<ListViewBase>(ExecuteTrash);
+            RenameCommand = new DelegateCommand<ListViewBase>(ExecuteRename);
+            ShareCommand = new DelegateCommand<ListViewBase>(ExecuteShare);
+            DownloadCommand = new DelegateCommand<ListViewBase>(ExecuteDownload);
         }
 
         public string ModifiedAt {
@@ -85,21 +81,10 @@ namespace BaiduYun.ViewModels {
             get { return file; }
         }
         
-        public ICommand TrashCommand {
-            get { return trash; }
-        }
-
-        public ICommand RenameCommand {
-            get { return rename; }
-        }
-
-        public ICommand ShareCommand {
-            get { return share; }
-        }
-
-        public ICommand DownloadCommand {
-            get { return download; }
-        }
+        public ICommand TrashCommand { get; private set; }
+        public ICommand RenameCommand { get; private set; }
+        public ICommand ShareCommand { get; private set; }
+        public ICommand DownloadCommand { get; private set; }
 
         public ObservableCollection<YunFileViewModel> Children { get; set; } = null;
 
@@ -121,7 +106,7 @@ namespace BaiduYun.ViewModels {
 
         private async void ExecuteRename(ListViewBase list) {
             var newname = await Dialogs.InputDialog("重命名为：", file.server_filename);
-            if (!string.IsNullOrEmpty(newname) && await PCS.RenameFile(Globals.bdstoken, file.path, newname)) {
+            if (!String.IsNullOrEmpty(newname) && await PCS.RenameFile(Globals.bdstoken, file.path, newname)) {
                 var oldpath = file.path;
                 var newpath = oldpath.Replace(file.server_filename, newname);
                 file.server_filename = newname;

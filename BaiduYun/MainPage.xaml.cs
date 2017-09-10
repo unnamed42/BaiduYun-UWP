@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Linq;
 
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
-using BaiduYun.UWP;
 using BaiduYun.Models;
 using BaiduYun.Global;
+using BaiduYun.Xaml.Input;
 
 namespace BaiduYun {
     
@@ -18,13 +15,6 @@ namespace BaiduYun {
         public MainPage() {
             Globals.MainFrame = MainFrame;
             this.InitializeComponent();
-
-            var SetBackButton = new Action<Frame>((frame) => {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    frame.CanGoBack ?
-                    AppViewBackButtonVisibility.Visible :
-                    AppViewBackButtonVisibility.Collapsed;
-            });
 
             Login.LoginSuccess += async (sender, e) => {
                 if (!await vm.UpdateUserInfo())
@@ -38,15 +28,10 @@ namespace BaiduYun {
             };
 
             MainFrame.Navigating += (sender, e) => {
-                if (e.SourcePageType == MainFrame.SourcePageType) {
-                    e.Cancel = true;
-                    return;
-                }
+                e.Cancel = e.SourcePageType == MainFrame.SourcePageType;
             };
-
+            
             MainFrame.Navigated += (sender, e) => {
-                SetBackButton(sender as Frame);
-
                 foreach (var item in NavMenu.Items.Cast<NavButtonData>()) {
                     if (item.Page == MainFrame.SourcePageType) {
                         NavMenu.SelectedItem = item;
@@ -54,21 +39,6 @@ namespace BaiduYun {
                     }
                 }
             };
-            
-            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, e) => {
-                if (MainFrame.CanGoBack) {
-                    e.Handled = true;
-                    MainFrame.GoBack();
-                }
-            };
-
-            SetBackButton(MainFrame);
-        }
-
-        private void ShowAvatarFlyout(object sender, RightTappedRoutedEventArgs e) {
-            var element = (FrameworkElement)sender;
-            var flyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(element);
-            flyout.ShowAt(element, e.GetPosition(element));
         }
 
         private void PageNavigate(object sender, SelectionChangedEventArgs e) {

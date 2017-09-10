@@ -5,7 +5,7 @@
     xmlns:local="using:BaiduYun"
     xmlns:models="using:BaiduYun.Models"
     xmlns:vm="using:BaiduYun.ViewModels"
-    xmlns:controls="using:BaiduYun.Controls"
+    xmlns:controls="using:BaiduYun.Xaml.Controls"
     xmlns:pages="using:BaiduYun.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -108,15 +108,14 @@
                     <models:NavButtonData Glyph="{StaticResource ShareIcon}" Label="分享" Page="pages:Share"></models:NavButtonData>
                 </ListView>
                 
-                <StackPanel Orientation="Horizontal" RightTapped="ShowAvatarFlyout"
-                            RelativePanel.AlignBottomWithPanel="True">
-                    <FlyoutBase.AttachedFlyout>
+                <StackPanel Orientation="Horizontal" RelativePanel.AlignBottomWithPanel="True">
+                    <controls:ContextMenu.Menu>
                         <MenuFlyout>
                             <MenuFlyoutItem x:Name="LogoutButton" Text="注销" Command="{x:Bind vm.Logout}"
                                             IsEnabled="{x:Bind Login.Logged, Mode=OneWay}">
                             </MenuFlyoutItem>
                         </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
+                    </controls:ContextMenu.Menu>
                     <Ellipse Width="40" Height="40" Margin="5,0,5,5"
                              Stroke="Gray" StrokeThickness="1">
                         <Ellipse.Fill>
@@ -130,11 +129,9 @@
         </SplitView.Pane>
         <SplitView.Content>
             <controls:Login x:Name="Login">
-                <controls:Login.MainContent>
-                    <ScrollViewer>
-                        <Frame x:Name="MainFrame" ScrollViewer.VerticalScrollBarVisibility="Auto"></Frame>
-                    </ScrollViewer>
-                </controls:Login.MainContent>
+                <ScrollViewer>
+                    <Frame x:Name="MainFrame" ScrollViewer.VerticalScrollBarVisibility="Auto"></Frame>
+                </ScrollViewer>
             </controls:Login>
         </SplitView.Content>
     </SplitView>

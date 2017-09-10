@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Controls;
 
-using BaiduYun.API;
-using BaiduYun.Net;
-using BaiduYun.UWP;
 using BaiduYun.Misc;
 using BaiduYun.Models;
 using BaiduYun.Global;
+using BaiduYun.Net;
+using BaiduYun.Net.API;
+using BaiduYun.Xaml.Animations;
 
-namespace BaiduYun.Controls {
+namespace BaiduYun.Xaml.Controls {
     
     public sealed partial class Login : UserControl {
 
@@ -54,7 +55,7 @@ namespace BaiduYun.Controls {
         /// Set control to initial state
         /// </summary>
         public void ClearState() {
-            Animations.StartFadeAnimation(backdrop, this, FADE_DELAY);
+            Fade.StartAnimation(backdrop, this, FADE_DELAY);
 
             // get username and password of last logged user
             var accounts = Globals.Accounts;
@@ -72,7 +73,7 @@ namespace BaiduYun.Controls {
             if (await DoLogin()) {
                 NotLogged = false;
 
-                Animations.StartFadeAnimation(backdrop, this, FADE_DELAY, false);
+                Fade.StartAnimation(backdrop, this, FADE_DELAY, false);
 
                 var accounts = Globals.Accounts;
                 accounts.Active = UserName;
@@ -190,6 +191,7 @@ OK:
     }
 
     // Describing attached properties
+    [ContentProperty(Name = nameof(MainContent))]
     public sealed partial class Login : INotifyPropertyChanged {
 
         private const int FADE_DELAY = 200;
@@ -260,6 +262,6 @@ OK:
         }
 
         public static readonly DependencyProperty MainContentProperty =
-            DependencyProperty.RegisterAttached(nameof(MainContent), typeof(object), typeof(Login), null);
+            DependencyProperty.Register(nameof(MainContent), typeof(object), typeof(Login), null);
     };
 }

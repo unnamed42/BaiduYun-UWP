@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BaiduYun.Extensions {
 
-    public static class LinqExtensions {
+    public static class CollectionExtensions {
 
         public static void Each<T>(this IEnumerable<T> list, Action<T> action) {
             foreach (var item in list)

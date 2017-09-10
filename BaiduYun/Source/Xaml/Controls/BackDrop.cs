@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Hosting;
 
 using Microsoft.Graphics.Canvas.Effects;
 
-namespace BaiduYun.Controls {
+namespace BaiduYun.Xaml.Controls {
 
     /// <summary>
     /// A lightweight control to add blur and tint effect.

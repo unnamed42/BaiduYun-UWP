@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 using Windows.Storage.Streams;
 
-using BaiduYun.Net;
 using BaiduYun.Misc;
 using BaiduYun.Global;
-using BaiduYun.API.JsonResponse;
+using BaiduYun.Net.API.Response;
 
-namespace BaiduYun.API {
+namespace BaiduYun.Net.API {
 
     public class Auth {
 

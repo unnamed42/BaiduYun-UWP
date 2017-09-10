@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 using Windows.UI.Core;
 
-using BaiduYun.API;
-using BaiduYun.UWP;
 using BaiduYun.Global;
+using BaiduYun.Net.API;
+using BaiduYun.Xaml.Input;
 
 namespace BaiduYun.ViewModels {
 
@@ -16,10 +16,8 @@ namespace BaiduYun.ViewModels {
         private string username;
         private string avatarUrl = PLACEHOLDER;
 
-        private ICommand logout;
-
         public UserViewModel() {
-            logout = new ActionCommand(ExecuteLogout);
+            Logout = new ActionCommand(ExecuteLogout);
         }
 
         public string UserName {
@@ -32,9 +30,7 @@ namespace BaiduYun.ViewModels {
             private set { SetProperty(ref avatarUrl, value); }
         }
 
-        public ICommand Logout {
-            get { return logout; }
-        }
+        public ICommand Logout { get; private set; }
 
         public async Task<bool> UpdateUserInfo() {
             var name = await PCS.GetUserName();

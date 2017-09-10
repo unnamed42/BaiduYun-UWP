@@ -5,10 +5,10 @@ using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using BaiduYun.API;
 using BaiduYun.Global;
+using BaiduYun.Net.API;
 
-namespace BaiduYun.Controls {
+namespace BaiduYun.Xaml.Controls {
 
     public sealed partial class CaptchaDialog : ContentDialog, INotifyPropertyChanged {
         

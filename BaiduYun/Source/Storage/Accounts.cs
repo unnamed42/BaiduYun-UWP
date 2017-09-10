@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -19,11 +18,11 @@ namespace BaiduYun.Storage {
         /// <summary>
         /// all users selected remember password
         /// </summary>
-        private IDictionary<string, User> users;
+        private JsonObject users;
 
-        private Accounts(string active, JsonObject users) {
+        public Accounts(string active, JsonObject users) {
             this.active = active;
-            this.users = users.ToDictionary(kvp => kvp.Key, kvp => new User(kvp.Key, kvp.Value.GetObject()));
+            this.users = users;
         }
 
         public static async Task<Accounts> Read(IStorageFile file) {
@@ -43,9 +42,21 @@ namespace BaiduYun.Storage {
             await FileIO.WriteTextAsync(location, accounts.ToString());
         }
 
+        public Accounts Add(User user) {
+            users.SetObject(user.username, user.ToJsonObject());
+            active = user.username;
+            return this;
+        }
+
         public User this[string username] {
-            get { return users.TryGetValue(username, out var ret) ? ret : null; }
-            set { users.Add(username, value); }
+            get {
+                IJsonValue user;
+                if (users.TryGetValue(username, out user)) {
+                    return new User(username, user.GetObject());
+                } else
+                    return null;
+            }
+            set { Add(value); }
         }
 
         public string Active {
@@ -60,8 +71,8 @@ namespace BaiduYun.Storage {
                 return this[active];
             }
             set {
-                Active = value.username;
-                users[active] = value;
+                active = value.username;
+                this[active] = value;
             }
         }
 
@@ -70,13 +81,9 @@ namespace BaiduYun.Storage {
         }
 
         public static explicit operator JsonObject(Accounts accounts) {
-            var users = new JsonObject();
-            foreach (var kvp in accounts.users) 
-                users.SetObject(kvp.Key, kvp.Value.ToJsonObject());
-            
             return (new JsonObject())
                 .SetString(nameof(Accounts.active), accounts.active)
-                .SetObject(nameof(Accounts.users), users);
+                .SetObject(nameof(Accounts.users), accounts.users);
         }
 
         public override string ToString() {

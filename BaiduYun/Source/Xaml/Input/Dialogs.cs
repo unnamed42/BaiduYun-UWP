@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Core;
 
-namespace BaiduYun.UWP {
+namespace BaiduYun.Xaml.Input {
 
     public static class Dialogs {
 

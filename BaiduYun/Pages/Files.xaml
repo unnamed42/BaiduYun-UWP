@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BaiduYun.Pages"
     xmlns:vm="using:BaiduYun.ViewModels"
+    xmlns:controls="using:BaiduYun.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -89,20 +90,20 @@
                   ItemsSource="{x:Bind vm.Items, Mode=OneWay}" ItemClick="{x:Bind vm.FileClicked}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:YunFileViewModel">
-                    <Grid Background="Transparent" RightTapped="ShowItemFlyout">
+                    <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             <ColumnDefinition Width="0.2*"></ColumnDefinition>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <FlyoutBase.AttachedFlyout>
+                        <controls:ContextMenu.Menu>
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="移至回收站" Command="{x:Bind TrashCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
                                 <MenuFlyoutItem Text="重命名" Command="{x:Bind RenameCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
                                 <MenuFlyoutItem Text="创建分享" Command="{x:Bind ShareCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
                                 <MenuFlyoutItem Text="下载至..." Command="{x:Bind DownloadCommand}" CommandParameter="{Binding ElementName=FileList}"></MenuFlyoutItem>
                             </MenuFlyout>
-                        </FlyoutBase.AttachedFlyout>
+                        </controls:ContextMenu.Menu>
                         <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind FileIcon}" Margin="0,0,5,0"></FontIcon>
                             <TextBlock Text="{x:Bind FileName}">

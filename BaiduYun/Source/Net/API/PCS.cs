@@ -8,14 +8,13 @@ using System.Text.RegularExpressions;
 
 using Windows.Web.Http;
 
-using BaiduYun.Net;
 using BaiduYun.Misc;
 using BaiduYun.Global;
-using BaiduYun.API.JsonResponse;
+using BaiduYun.Net.API.Response;
 
 using Newtonsoft.Json;
 
-namespace BaiduYun.API {
+namespace BaiduYun.Net.API {
 
     public static class PCS {
 

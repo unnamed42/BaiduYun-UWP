@@ -5,12 +5,12 @@ using System.Collections.ObjectModel;
 
 using Windows.UI.Xaml.Controls;
 
-using BaiduYun.API;
-using BaiduYun.UWP;
 using BaiduYun.Misc;
 using BaiduYun.Global;
 using BaiduYun.Extensions;
-using BaiduYun.API.JsonResponse;
+using BaiduYun.Net.API;
+using BaiduYun.Net.API.Response;
+using BaiduYun.Xaml.Input;
 
 namespace BaiduYun.ViewModels {
 

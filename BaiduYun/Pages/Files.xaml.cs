@@ -1,9 +1,6 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
+﻿using Windows.UI.Xaml.Controls;
 
-using BaiduYun.UWP;
+using BaiduYun.Xaml.Input;
 
 namespace BaiduYun.Pages {
 
@@ -16,12 +13,6 @@ namespace BaiduYun.Pages {
                 if (!await vm.Init())
                     await Dialogs.Popup("错误", "无法获取用户信息");
             };
-        }
-
-        private void ShowItemFlyout(object sender, RightTappedRoutedEventArgs e) {
-            var element = (FrameworkElement)sender;
-            var flyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(element);
-            flyout.ShowAt(element, e.GetPosition(element));
         }
     }
 }

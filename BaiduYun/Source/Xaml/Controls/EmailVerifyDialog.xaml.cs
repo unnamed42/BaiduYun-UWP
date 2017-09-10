@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using BaiduYun.API;
+using BaiduYun.Net.API;
 
-namespace BaiduYun.Controls {
+namespace BaiduYun.Xaml.Controls {
 
     public sealed partial class EmailVerifyDialog : ContentDialog {
 
