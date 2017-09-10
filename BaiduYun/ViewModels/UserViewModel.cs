@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Windows.UI.Core;
 

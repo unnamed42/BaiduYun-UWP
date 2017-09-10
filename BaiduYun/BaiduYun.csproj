@@ -135,12 +135,15 @@
     <Compile Include="Source\Xaml\Input\ActionCommand.cs" />
     <Compile Include="Source\Xaml\Animations\Fade.cs" />
     <Compile Include="Source\Xaml\Controls\ContextMenu.cs" />
+    <Compile Include="Source\Xaml\Input\ICommand.cs" />
     <Compile Include="Source\Xaml\Input\Dialogs.cs" />
     <Compile Include="Source\Misc\Singleton.cs" />
     <Compile Include="Source\Misc\Utils.cs" />
     <Compile Include="Source\Net\WebUtils.cs" />
     <Compile Include="Source\Storage\Accounts.cs" />
     <Compile Include="Source\Xaml\Input\DelegateCommand.cs" />
+    <Compile Include="ViewModels\DownloadTaskViewModel.cs" />
+    <Compile Include="ViewModels\DownloadViewModel.cs" />
     <Compile Include="ViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\YunFileViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

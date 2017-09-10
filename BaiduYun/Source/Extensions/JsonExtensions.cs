@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using Windows.Data.Json;
+﻿using Windows.Data.Json;
 
 namespace BaiduYun.Extensions {
 

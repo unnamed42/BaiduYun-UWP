@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 
 namespace BaiduYun.Xaml.Input {
 
@@ -16,9 +15,13 @@ namespace BaiduYun.Xaml.Input {
                 this.canExecute = canExecute;
         }
 
+        public void RaiseCanExecuteChanged() {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
+
         public void SetCanExecute(Func<T, bool> canExecute) {
             this.canExecute = canExecute;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
+            RaiseCanExecuteChanged();
         }
 
         public bool CanExecute(object parameter) {

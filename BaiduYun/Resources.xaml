@@ -12,6 +12,7 @@
     <x:String x:Key="LockIcon">&#xE8A6;</x:String>
     <x:String x:Key="CancelIcon">&#xE711;</x:String>
     <x:String x:Key="PauseIcon">&#xE769;</x:String>
+    <x:String x:Key="PlayIcon">&#xE768;</x:String>
     
     <!-- Font Awesome Aliases --><!--
     <x:String x:Key="MenuIcon">&#xF0C9;</x:String>
