@@ -3,11 +3,80 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BaiduYun.Pages"
+    xmlns:cvt="using:BaiduYun.Xaml.Converters"
+    xmlns:vm="using:BaiduYun.ViewModels"
+    xmlns:controls="using:BaiduYun.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <cvt:BoolToVisibility x:Key="btv"></cvt:BoolToVisibility>
 
+        <Style x:Key="SharedFileListStyle" TargetType="ListView">
+            <Setter Property="SelectionMode" Value="Multiple"></Setter>
+            <Setter Property="IsMultiSelectCheckBoxEnabled" Value="True"></Setter>
+            <Setter Property="IsItemClickEnabled" Value="False"></Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" x:Name="SelectAllBox" Margin="5,0,0,0" IsThreeState="True"></CheckBox>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="文件名" FontSize="18" Margin="5,5,0,5" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="创建时间" FontSize="18" Margin="5,5,0,5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+
+        <ListView x:Name="ShareList" Grid.Row="1" Style="{StaticResource SharedFileListStyle}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:SharedFileViewModel">
+                    <Grid Grid.Column="1" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <controls:ContextMenu.Menu>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="取消分享" Command="{x:Bind DisableShareCommand}" CommandParameter="{Binding ElementName=ShareList}"></MenuFlyoutItem>
+                            </MenuFlyout>
+                        </controls:ContextMenu.Menu>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{StaticResource LockIcon}" Margin="0,0,5,0"
+                                      Visibility="{x:Bind HasPassword, Converter={StaticResource btv}}">
+                            </FontIcon>
+                            <TextBlock Text="{x:Bind Name}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind Name}"></ToolTip>
+                                </ToolTipService.ToolTip>   
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="{x:Bind CreatedAt}" Grid.Column="1"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
+    
 </Page>

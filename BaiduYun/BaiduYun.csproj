@@ -145,6 +145,8 @@
     <Compile Include="ViewModels\DownloadTaskViewModel.cs" />
     <Compile Include="ViewModels\DownloadViewModel.cs" />
     <Compile Include="ViewModels\FilesViewModel.cs" />
+    <Compile Include="ViewModels\SharedFileViewModel.cs" />
+    <Compile Include="ViewModels\ShareViewModel.cs" />
     <Compile Include="ViewModels\YunFileViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
