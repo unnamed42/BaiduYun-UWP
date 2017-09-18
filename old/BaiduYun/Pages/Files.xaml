@@ -1,0 +1,105 @@
+﻿<Page
+    x:Class="BaiduYun.Pages.Files"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BaiduYun.Pages"
+    xmlns:data="using:BaiduYun"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    NavigationCacheMode="Enabled">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource AppBarBackground}" Grid.Row="0">
+            <ListView x:Name="BreadcrumbList" ItemClick="ToFolder" Style="{StaticResource FileListBreadcrumb}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:YunFileAdapter">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind File.server_filename}"></TextBlock>
+                            <TextBlock Text="/" Margin="2,0,0,0"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" x:Name="SelectAllBox" Margin="5,0,0,0" IsThreeState="True"></CheckBox>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="文件名" FontSize="18" Margin="5,5,0,5" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="大小" FontSize="18" Margin="5,5,0,5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="修改时间" FontSize="18" Margin="5,5,0,5" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+
+        <ListView x:Name="FileList" Grid.Row="2" SelectionMode="Multiple" SelectionChanged="FileListSelectionChanged"
+                  IsMultiSelectCheckBoxEnabled="True" IsItemClickEnabled="False">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="data:YunFileAdapter">
+                    <Grid x:Name="FileContainer" Grid.Column="1" Background="Transparent" RightTapped="ShowItemFlyout" Tapped="ItemTapped">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="移至回收站" Click="MoveToTrash"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="重命名" Click="RenameTo"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="创建分享" Click="CreateShare"></MenuFlyoutItem>
+                                <MenuFlyoutItem Text="下载至..." Click="DownloadTo"></MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,10,0">
+                            <FontIcon FontFamily="Assets/fontawesome-webfont.ttf#FontAwesome" 
+                                      Glyph="{x:Bind FileIcon}"
+                                      Margin="0,0,5,0">
+                            </FontIcon>
+                            <TextBlock Text="{x:Bind File.server_filename}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind File.server_filename}"></ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="{x:Bind FileSize}" Grid.Column="1"></TextBlock>
+                        <TextBlock Text="{x:Bind ModifiedAt}" Grid.Column="2"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <RelativePanel Background="{ThemeResource AppBarBackground}" Grid.Row="3">
+            <TextBlock x:Name="QuotaDescriptor" Text="使用量" Margin="5,10,0,10"
+                       RelativePanel.AlignLeftWithPanel="True">
+            </TextBlock>
+            <ProgressBar x:Name="QuotaInfo" Height="10" Width="150"
+                         Margin="15" Minimum="0" Maximum="1"
+                         RelativePanel.RightOf="QuotaDescriptor">
+            </ProgressBar>
+            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
+                
+            </StackPanel>
+        </RelativePanel>
+    </Grid>
+
+</Page>
