@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="1791ad5b-a1e2-4a0d-b334-8475cff9edf9"
+    Name="41454057-672c-4ff1-b433-6f39a447864d"
     Publisher="CN=h"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="1791ad5b-a1e2-4a0d-b334-8475cff9edf9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="41454057-672c-4ff1-b433-6f39a447864d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BaiduYun</DisplayName>
